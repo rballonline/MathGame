@@ -146,7 +146,6 @@
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\viewmodels\types.js" />
     <Content Include="App\viewmodels\welcome.js" />
-    <Content Include="App\views\detail.html" />
     <Content Include="App\views\flickr.html" />
     <Content Include="App\views\game.html" />
     <Content Include="App\views\scores.html" />

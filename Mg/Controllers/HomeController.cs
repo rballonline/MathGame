@@ -10,7 +10,6 @@ namespace Mg.Controllers
     {
         public ActionResult Index()
         {
-            // test
             return View();
         }
     }
