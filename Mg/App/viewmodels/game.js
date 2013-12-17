@@ -1,25 +1,61 @@
-﻿define(['plugins/http', 'knockout', 'services/engine'], function (http, ko, eng) {
-	return {
-		timer: ko.observable(),
-		gamerows: ko.observableArray([]),
-		chooseBox: function (box) {
-			alert('box chosen val: ' + box.val + ' row: ' + box.row + ' col: ' + box.col + ' valid? ' + eng.isValid(box.val));
-		},
-		activate: function (type) {
-			var board = eng.startGame(type, 'three');
+﻿define(['plugins/http', 'durandal/app', 'knockout', 'services/engine', 'jquery'], function (http, app, ko, eng, $) {
+	var self = this;
+	var counter;
 
-			for (var i = 0; i < board.length; i++) {
-				var boardrow = board[i];
-				var box = ko.observableArray([]);
-				for (var j = 0; j < boardrow.length; j++) {
-					box.push({ row: i, col: j, val: boardrow[j]});
-				}
-				this.gamerows.push(box);
-			}
-		},
-		canDeactivate: function () {
-			//the router's activator calls this function to see if it can leave the screen
-			return app.showMessage('Are you sure you want to leave this page?', 'Navigate', ['Yes', 'No']);
+	function timer() {
+		var count = self.timeLeft() - 1;
+		self.timeLeft(count);
+		if (count <= 0) {
+			clearInterval(counter);
+			self.canPlay(false);
+			return;
 		}
+	}
+
+	self.timeLeft = ko.observable(120);
+	self.gamerows = ko.observableArray([]);
+	self.score = ko.observable(0);
+	self.canPlay = ko.observable(true);
+	self.chooseBox = function (box) {
+		var result = eng.boxChosen({ row: box.row, col: box.col, val: box.val() });
+		self.gamerows()[box.row][box.col].val(result.newValue);
+		self.score(result.score);
 	};
+	self.activate = function (type) {
+		var board = eng.startGame(type, 'three');
+
+		self.gamerows = [];
+		for (var i = 0; i < board.length; i++) {
+			var boardrow = board[i];
+			var box = [];
+			for (var j = 0; j < boardrow.length; j++) {
+				box.push({ row: i, col: j, val: ko.observable(boardrow[j]) });
+			}
+			self.gamerows.push(box);
+		}
+
+		self.canPlay(true);
+		self.timeLeft(45);
+
+		counter = setInterval(timer, 1000);
+	};
+	self.compositionComplete = function () {
+		var boardHeight = $(window).height() - $('#header').height() - $('#footer').height() - $('.navbar-fixed-top').height();
+		$('#board').height(boardHeight);
+	};
+	self.canDeactivate = function () {
+		var goByeBye = true;
+		if (self.timeLeft() > 0) {
+			goByeBye = app.showMessage('Current game in progress, are you sure?', 'End Game', ['Yes', 'No']);
+		}
+
+		if (goByeBye) {
+			clearInterval(counter);
+		}
+		else {
+			setInterval(timer, 1000);
+		}
+		return goByeBye;
+	};
+	return self;
 });

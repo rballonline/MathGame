@@ -1,7 +1,16 @@
 ﻿<div>
-	<div data-bind="foreach: gamerows">
-		<div data-bind="foreach: $data" class="row">
-			<button data-bind="text: val, click: $root.chooseBox" class="span2 btn btn-large"></button>
+	<div class="row" id="header">
+		<div class="span6">
+			<span data-bind="text: timeLeft"></span>
+		</div>
+		<div class="span6 right">
+			<span data-bind="text: score"></span>
 		</div>
 	</div>
+	<div data-bind="foreach: gamerows" id="board">
+		<div data-bind="foreach: $data" class="row" style="height:25%">
+			<button style="height:100%" data-bind="text: val, click: $root.chooseBox, enable: $root.canPlay" class="span2 btn btn-large"></button>
+		</div>
+	</div>
+	<div data-bind="hidden: canPlay" id="footer">Time is up!</div>
 </div>

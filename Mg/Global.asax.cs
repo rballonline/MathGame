@@ -6,21 +6,35 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using ServiceStack;
+using Mg.Services;
+using Funq;
 
 namespace Mg
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+	public class MvcApplication : System.Web.HttpApplication
+	{
+		public class AppHost : AppHostBase
+		{
+			//Tell Service Stack the name of your application and where to find your web services
+			public AppHost() : base("Web Services", typeof(HelloService).Assembly) { }
 
-    public class MvcApplication : System.Web.HttpApplication
-    {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
+			public override void Configure(Funq.Container container)
+			{
+				//register any dependencies your services use, e.g:
+				//container.Register<ICacheClient>(new MemoryCacheClient());
+			}
+		}
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
-    }
+
+		protected void Application_Start()
+		{
+			AreaRegistration.RegisterAllAreas();
+
+			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+			RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+			new AppHost().Init();
+		}
+	}
 }
