@@ -1,1 +1,7 @@
-﻿Main
+﻿<div>
+	<div data-bind="foreach: gamerows">
+		<div data-bind="foreach: $data" class="row">
+			<button data-bind="text: val, click: $root.chooseBox" class="span2 btn btn-large"></button>
+		</div>
+	</div>
+</div>
