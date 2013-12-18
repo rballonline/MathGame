@@ -2,19 +2,17 @@
 using System.Configuration;
 using System.Data;
 using ServiceStack.Logging;
-using ServiceStack.OrmLite;
-using ServiceStack.OrmLite.PostgreSQL;
 using System.Linq;
 
 namespace Mg.Services
 {
 	public class BaseService
 	{
-		protected virtual string ConnectionString { get; set; }
+		/*protected virtual string ConnectionString { get; set; }
 
 		public IDbConnection OpenDbConnection(string connString = null)
 		{
-			OrmLiteConfig.DialectProvider = PostgreSQLDialectProvider.Instance;
+			/*OrmLiteConfig.DialectProvider = PostgreSQLDialectProvider.Instance;
 			OrmLiteConfig.DialectProvider.NamingStrategy = new OrmLiteNamingStrategyBase();
 			OrmLiteConfig.ClearCache();
 
@@ -27,6 +25,6 @@ namespace Mg.Services
 			connString = connString ?? ConnectionString;
 
 			return connString.OpenDbConnection();
-		}
+		}*/
 	}
 }

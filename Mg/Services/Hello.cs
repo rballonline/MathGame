@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ServiceStack;
-using ServiceStack.OrmLite.PostgreSQL;
-using ServiceStack.OrmLite;
 using Mg.Models;
 
 namespace Mg.Services
@@ -21,10 +19,6 @@ namespace Mg.Services
 	{
 		public object Any(Hello request)
 		{
-			using (var db = OpenDbConnection())
-			{
-				var id = db.Insert<Score>(new Score { Date = DateTime.UtcNow, Name = "Will", Value = 100 }, true);
-			}
 			return new HelloResponse { Result = "Hello, " + request.Name };
 		}
 	} 

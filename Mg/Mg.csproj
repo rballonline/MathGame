@@ -36,15 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Security">
-      <HintPath>..\packages\Npgsql.2.0.14.2\lib\net40\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql">
-      <HintPath>..\packages\Npgsql.2.0.14.2\lib\net40\Npgsql.dll</HintPath>
-    </Reference>
-    <Reference Include="policy.2.0.Npgsql">
-      <HintPath>..\packages\Npgsql.2.0.14.2\lib\net40\policy.2.0.Npgsql.dll</HintPath>
-    </Reference>
     <Reference Include="ServiceStack">
       <HintPath>..\packages\ServiceStack.4.0.5\lib\net40\ServiceStack.dll</HintPath>
     </Reference>
@@ -56,12 +47,6 @@
     </Reference>
     <Reference Include="ServiceStack.Interfaces">
       <HintPath>..\packages\ServiceStack.Interfaces.4.0.5\lib\net40\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.OrmLite">
-      <HintPath>..\packages\ServiceStack.OrmLite.4.0.5\lib\net40\ServiceStack.OrmLite.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.OrmLite.PostgreSQL">
-      <HintPath>..\packages\ServiceStack.OrmLite.PostgreSQL.4.0.5\lib\net40\ServiceStack.OrmLite.PostgreSQL.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.4.0.5\lib\net40\ServiceStack.Text.dll</HintPath>
@@ -264,7 +249,9 @@
     <Folder Include="Views\Durandal\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\font\fontawesome-webfont.eot" />
