@@ -24,7 +24,7 @@
 	self.activate = function (type) {
 		var board = eng.startGame(type, 'three');
 
-		self.gamerows = [];
+		self.gamerows([]);
 		for (var i = 0; i < board.length; i++) {
 			var boardrow = board[i];
 			var box = [];
@@ -44,18 +44,18 @@
 		$('#board').height(boardHeight);
 	};
 	self.canDeactivate = function () {
-		var goByeBye = true;
+		clearInterval(counter);
 		if (self.timeLeft() > 0) {
-			goByeBye = app.showMessage('Current game in progress, are you sure?', 'End Game', ['Yes', 'No']);
+			app.showMessage('Current game in progress, are you sure?', 'End Game', ['Yes', 'No']).then(function (response) {
+				if (response === 'Yes') {
+					return true;
+				}
+				else {
+					counter = setInterval(timer, 1000);
+					return false;
+				}
+			});
 		}
-
-		if (goByeBye) {
-			clearInterval(counter);
-		}
-		else {
-			setInterval(timer, 1000);
-		}
-		return goByeBye;
 	};
 	return self;
 });
