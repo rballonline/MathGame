@@ -162,12 +162,14 @@
     <Content Include="App\services\scoreService.js" />
     <Content Include="App\viewmodels\flickr.js" />
     <Content Include="App\viewmodels\game.js" />
+    <Content Include="App\viewmodels\numbers.js" />
     <Content Include="App\viewmodels\scores.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\viewmodels\types.js" />
     <Content Include="App\viewmodels\welcome.js" />
     <Content Include="App\views\flickr.html" />
     <Content Include="App\views\game.html" />
+    <Content Include="App\views\numbers.html" />
     <Content Include="App\views\scores.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="App\views\types.html" />
