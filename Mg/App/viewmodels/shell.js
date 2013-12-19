@@ -9,10 +9,10 @@
         activate: function () {
             router.map([
                 { route: '', title: 'Menu', moduleId: 'viewmodels/welcome', nav: true },
-                { route: 'flickr', moduleId: 'viewmodels/flickr', nav: false },
-                { route: 'scores', moduleId: 'viewmodels/scores', nav: true },
-                { route: 'types', moduleId: 'viewmodels/types' },
-                { route: 'game/:type', moduleId: 'viewmodels/game' }
+                { route: 'scores', title: 'High Scores', moduleId: 'viewmodels/scores', nav: true },
+                { route: 'types', title: 'Choose game', moduleId: 'viewmodels/types' },
+                { route: 'numbers/:t', title: 'Choose number', moduleId: 'viewmodels/numbers' },
+                { route: 'game/:n/:number', moduleId: 'viewmodels/game' }
             ]).buildNavigationModel();
             
             return router.activate();

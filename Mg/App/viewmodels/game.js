@@ -21,8 +21,9 @@
 		self.gamerows()[box.row][box.col].val(result.newValue);
 		self.score(result.score);
 	};
-	self.activate = function (type) {
-		var board = eng.startGame(type, 'three');
+
+	self.activate = function (type, number) {
+		var board = eng.startGame(type, number);
 
 		self.gamerows([]);
 		for (var i = 0; i < board.length; i++) {
@@ -45,17 +46,19 @@
 	};
 	self.canDeactivate = function () {
 		clearInterval(counter);
-		if (self.timeLeft() > 0) {
-			app.showMessage('Current game in progress, are you sure?', 'End Game', ['Yes', 'No']).then(function (response) {
-				if (response === 'Yes') {
-					return true;
-				}
-				else {
-					counter = setInterval(timer, 1000);
-					return false;
-				}
-			});
+		/*if (self.timeLeft() > 0) {
+		app.showMessage('Current game in progress, are you sure?', 'End Game', ['Yes', 'No']).then(function (response) {
+		if (response === 'Yes') {
+		return true;
 		}
+		else {
+		counter = setInterval(timer, 1000);
+		return false;
+		}
+		});
+		}*/
+		//self.deactivate();
+		return true;
 	};
 	return self;
 });

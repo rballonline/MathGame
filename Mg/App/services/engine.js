@@ -21,6 +21,9 @@
 	}
 
 	function createBoard() {
+		if (!type || !number) {
+			return [];
+		}
 		var correctAnswers = gameTypes[type][number];
 
 		for (var j = 0; j < 4; j++) {

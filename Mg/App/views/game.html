@@ -12,5 +12,5 @@
 			<button style="height:100%" data-bind="text: val, click: $root.chooseBox, enable: $root.canPlay" class="span2 btn btn-large"></button>
 		</div>
 	</div>
-	<div data-bind="hidden: canPlay" id="footer">Time is up!</div>
+	<div data-bind="visible: canPlay() == false" id="footer">Time is up!</div>
 </div>
