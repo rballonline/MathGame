@@ -15,7 +15,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator'],  function (s
     system.debug(true);
     //>>excludeEnd("build");
 
-    app.title = 'mGMg';
+    app.title = 'Mg';
 
     app.configurePlugins({
         router: true,

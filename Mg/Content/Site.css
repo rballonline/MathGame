@@ -4,11 +4,27 @@
 {
 	font-size: 1.8em;
 	height: 25px;
-	padding: 7px; margin: 0;
+	padding: 7px 0;
 }
 #score 
 {
 	float:right;
+}
+#status {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 100;
+
+	height: 200px;
+	margin-top: -200px;
+
+	width: 600px;
+	margin-left: -300px;
+}
+#status button {
+		width: 50%;
+		margin: 0 auto;
 }
 .field-validation-error {
 		color: #f00;

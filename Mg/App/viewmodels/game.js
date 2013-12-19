@@ -1,7 +1,11 @@
 ﻿define(['plugins/http', 'durandal/app', 'knockout', 'services/engine', 'jquery'], function (http, app, ko, eng, $) {
 	var vm = function () {
 		var self = this;
-		var counterInterval, scoreInterval, startGameInterval, scoreDelta = 0;
+		var counterInterval,
+			startGameInterval,
+			startGameCount = 4,
+			gameType,
+			gameNumber;
 
 		function timer() {
 			var count = self.timeLeft() - 1;
@@ -9,29 +13,39 @@
 			if (count <= 0) {
 				clearInterval(counterInterval);
 				self.canPlay(false);
-				return;
+				app.showMessage('Play Again?', 'Time is up!', ['Yes', 'No']).then(function (response) {
+					if (response === 'Yes') {
+						self.startGame();
+					}
+					else {
+						window.location = '#/';
+					}
+				});
 			}
 		}
 
-		function scoreEffect() {
-			if (scoreDelta > 0) {
-				$('#score').css({ 'font-size': '2.2em', 'color': 'green' });
-				self.score(self.score() + 1);
-				scoreDelta--;
+		function startGameTimer() {
+			startGameCount--;
+			switch (startGameCount) {
+				case 3:
+					self.status('Get ready');
+					break;
+				case 2:
+					self.status('Get set');
+					break;
+				case 1:
+					self.status('GO!');
+					break;
+				case 0:
+					self.status('');
+					startNewGame();
+					clearInterval(startGameInterval);
+					break;
 			}
-			else {
-				$('#score').css({ 'font-size': '2.2em', 'color': '#F23423' });
-				self.score(self.score() - 1);
-				scoreDelta++;
-			}
-			if (scoreDelta == 0) {
-				clearInterval(scoreInterval);
-				self.canPlay(true);
-			}
-			$('#score').animate({ 'font-size': '1em', 'color': '#000000' }, 50);
 		}
 
-		self.timeLeft = ko.observable(120);
+		self.status = ko.observable();
+		self.timeLeft = ko.observable(45);
 		self.gamerows = ko.observableArray([]);
 		self.score = ko.observable(0);
 		self.canPlay = ko.observable(true);
@@ -42,14 +56,29 @@
 				$(this).css({ "background-color": "#F5F5F5", 'background-image': 'linear-gradient(to bottom, #FFFFFF, #E6E6E6)' }).fadeIn();
 			});
 
-			self.canPlay(false);
-			scoreDelta = result.score - self.score();
-			timeIteration = 500 / scoreDelta;
-			scoreInterval = setInterval(scoreEffect, 50);
+			var scoreDelta = result.score - self.score();
+			var timeIteration = 500 / scoreDelta;
+
+			var scoreInterval = setInterval(function () {
+				if (scoreDelta > 0) {
+					$('#score').css({ 'font-size': '2.2em', 'color': 'green' });
+					self.score(self.score() + 1);
+					scoreDelta--;
+				}
+				else {
+					$('#score').css({ 'font-size': '2.2em', 'color': '#F23423' });
+					self.score(self.score() - 1);
+					scoreDelta++;
+				}
+				if (scoreDelta == 0) {
+					clearInterval(scoreInterval);
+				}
+				$('#score').animate({ 'font-size': '1em', 'color': '#000000' }, 50);
+			}, 50);
 		};
 
-		self.activate = function (type, number) {
-			var board = eng.startGame(type, number);
+		function startNewGame() {
+			var board = eng.startGame(gameType, gameNumber);
 
 			self.gamerows([]);
 			for (var i = 0; i < board.length; i++) {
@@ -65,6 +94,17 @@
 			self.timeLeft(45);
 
 			counterInterval = setInterval(timer, 1000);
+		}
+
+		self.startGame = function () {
+			startGameCount = 4;
+			startGameInterval = setInterval(startGameTimer, 1000);
+		};
+
+		self.activate = function (type, number) {
+			gameType = type;
+			gameNumber = number;
+			self.startGame();
 		};
 		self.compositionComplete = function () {
 			var boardHeight = $(window).height() - $('#header').height() - $('#footer').height() - $('.navbar-fixed-top').height();
