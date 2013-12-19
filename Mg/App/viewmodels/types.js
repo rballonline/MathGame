@@ -1,5 +1,5 @@
 ﻿define(['knockout'], function (ko) {
-	var self = this;
+	var vm = function () { };
 
-	return self;
+	return vm;
 });

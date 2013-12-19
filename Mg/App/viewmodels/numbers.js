@@ -1,16 +1,18 @@
 ﻿define([], function () {
-	var self = this;
+	var vm = function () {
+		var self = this;
 
-	self.type = ko.observable();
+		self.type = ko.observable();
 
-	self.activate = function (type) {
-		self.type(type);
-		switch (type) {
-			case "multiples", "factors":
-				break;
-			default:
-				break;
-		}
+		self.activate = function (type) {
+			self.type(type);
+			switch (type) {
+				case "multiples", "factors":
+					break;
+				default:
+					break;
+			}
+		};
 	};
-	return self;
+	return vm;
 });

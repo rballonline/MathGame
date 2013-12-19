@@ -160,7 +160,6 @@
     <Content Include="App\main.js" />
     <Content Include="App\services\engine.js" />
     <Content Include="App\services\scoreService.js" />
-    <Content Include="App\viewmodels\flickr.js" />
     <Content Include="App\viewmodels\game.js" />
     <Content Include="App\viewmodels\numbers.js" />
     <Content Include="App\viewmodels\scores.js" />
