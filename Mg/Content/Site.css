@@ -6,9 +6,9 @@
 	height: 25px;
 	padding: 7px 0;
 }
-#score 
+#header #stats 
 {
-	float:right;
+	text-align: right;
 }
 #status {
 	position: fixed;

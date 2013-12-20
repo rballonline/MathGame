@@ -45,6 +45,7 @@
 		}
 
 		self.status = ko.observable();
+		self.streak = ko.observable();
 		self.timeLeft = ko.observable(45);
 		self.gamerows = ko.observableArray([]);
 		self.score = ko.observable(0);
@@ -52,10 +53,13 @@
 		self.chooseBox = function (box) {
 			var result = eng.boxChosen({ row: box.row, col: box.col, val: box.val() });
 			$('#r' + box.row + 'c' + box.col).css({ "background-color": (result.isValid ? "green" : "#F23423"), 'background-image': 'linear-gradient(to bottom, #FFFFFF, ' + (result.isValid ? "green" : "#F23423") + ')' }).fadeOut('slow', function () {
-				self.gamerows()[box.row][box.col].val(result.newValue);
+				for (var i = 0; i < result.newRow.length; i++) {
+					self.gamerows()[box.row][i].val(result.newRow[i]);
+				}
 				$(this).css({ "background-color": "#F5F5F5", 'background-image': 'linear-gradient(to bottom, #FFFFFF, #E6E6E6)' }).fadeIn();
 			});
 
+			self.streak(result.streak);
 			var scoreDelta = result.score - self.score();
 			var timeIteration = 500 / scoreDelta;
 
